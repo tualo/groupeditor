@@ -12,7 +12,7 @@ Ext.define('Tualo.groupeditor.lazy.Viewport',{
         glyph: 'circle-plus',
         tooltip: 'Hinzufügen',
         handler: function (me) {
-            var grid = this.up('panel').down('gridpanel');
+            var grid = this.up('panel').down('grid');
             var store = grid.getStore();
             store.add({name:'Neue Gruppe',aktiv:1});
             setTimeout(()=>{store.load()},1000);
@@ -25,7 +25,7 @@ Ext.define('Tualo.groupeditor.lazy.Viewport',{
         glyph: 'circle-minus',
         tooltip: 'Entfernen',
         handler: function (me) {
-            var grid = this.up('panel').down('gridpanel');
+            var grid = this.up('panel').down('grid');
             var store = grid.getStore();
             var selection = grid.getSelection()[0];
             if (!selection) return;
@@ -54,7 +54,7 @@ Ext.define('Tualo.groupeditor.lazy.Viewport',{
         glyph: 'sync',
         tooltip: 'neu Laden',
         handler: function (me) {
-            var grid = this.up('panel').down('gridpanel');
+            var grid = this.up('panel').down('grid');
             var store = grid.getStore();
             store.load( );
         }
@@ -63,12 +63,12 @@ Ext.define('Tualo.groupeditor.lazy.Viewport',{
     layout: 'card',
     items: [
         {
-            xtype: 'gridpanel',
-    selModel: 'cellmodel',
-    plugins: {
-        cellediting: {
-            clicksToEdit: 1
-        }
+            xtype: 'grid',
+            selModel: 'cellmodel',
+            plugins: {
+                cellediting: {
+                    clicksToEdit: 1
+                }
     },
             store: {
                 type: 'json',
@@ -130,7 +130,7 @@ Ext.define('Tualo.groupeditor.lazy.Viewport',{
                     text: 'Speichern',
                     handler: function (me) {
                         var form = me.up('form');
-                        var grid = form.up('panel').down('gridpanel');
+                        var grid = form.up('panel').down('grid');
                         var store = tree.getStore();
                         var root = store.getRoot();
                         var selection = grid.getSelection()[0];
