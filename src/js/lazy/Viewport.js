@@ -1,11 +1,18 @@
-Ext.define('Tualo.groupeditor.lazy.Viewport',{
+Ext.define('Tualo.groupeditor.lazy.Viewport', {
     extend: 'Ext.panel.Panel',
-    requires:[
+    requires: [
         'Tualo.groupeditor.lazy.controller.Viewport',
         'Tualo.groupeditor.lazy.model.Viewport',
     ],
     alias: 'widget.groupeditorviewport',
-    
+
+    getWindowTitle: function () {
+        return 'Benutzergruppen'
+    },
+    getWindowIcon: function () {
+        return 'fa-solid fa-user-group';
+    },
+
     tools: [{
         xtype: 'glyphtool',
         //glyphPrefix: 'entypo et-',
@@ -14,8 +21,8 @@ Ext.define('Tualo.groupeditor.lazy.Viewport',{
         handler: function (me) {
             var grid = this.up('panel').down('grid');
             var store = grid.getStore();
-            store.add({name:'Neue Gruppe',aktiv:1});
-            setTimeout(()=>{store.load()},1000);
+            store.add({ name: 'Neue Gruppe', aktiv: 1 });
+            setTimeout(() => { store.load() }, 1000);
 
         }
     },
@@ -29,10 +36,10 @@ Ext.define('Tualo.groupeditor.lazy.Viewport',{
             var store = grid.getStore();
             var selection = grid.getSelection()[0];
             if (!selection) return;
-            
-            
-            
-            Ext.MessageBox.confirm('Löschen','Soll der Eintrag "'+selection.get('name')+'" wirklich gelöscht werden?', function (btn) {
+
+
+
+            Ext.MessageBox.confirm('Löschen', 'Soll der Eintrag "' + selection.get('name') + '" wirklich gelöscht werden?', function (btn) {
                 if (btn == 'yes') {
 
                     Tualo.Fetch.post('groupeditor/delete', {
@@ -56,7 +63,7 @@ Ext.define('Tualo.groupeditor.lazy.Viewport',{
         handler: function (me) {
             var grid = this.up('panel').down('grid');
             var store = grid.getStore();
-            store.load( );
+            store.load();
         }
 
     }],
@@ -69,7 +76,7 @@ Ext.define('Tualo.groupeditor.lazy.Viewport',{
                 cellediting: {
                     clicksToEdit: 1
                 }
-    },
+            },
             store: {
                 type: 'json',
                 autoSync: true,
@@ -89,7 +96,7 @@ Ext.define('Tualo.groupeditor.lazy.Viewport',{
                     }
                 }
             },
-            
+
             listeners: {
                 itemdblclick: function (me, record, item, index, e, eOpts) {
                     this.up('panel').getLayout().setActiveItem(1);
@@ -103,21 +110,21 @@ Ext.define('Tualo.groupeditor.lazy.Viewport',{
                 dataIndex: 'name',
                 flex: 2,
                 sortable: true
-            },{
+            }, {
                 xtype: 'checkcolumn',
                 text: 'Aktiv',
                 dataIndex: 'aktiv',
                 flex: 1,
                 sortable: true,
             }]
-        },{
+        }, {
             xtype: 'form',
             bodyPadding: 10,
             defaults: {
                 anchor: '100%',
                 labelWidth: 120
             },
-            
+
             buttons: [
                 {
                     text: 'Abbrechen',
@@ -125,7 +132,7 @@ Ext.define('Tualo.groupeditor.lazy.Viewport',{
                         var form = me.up('form');
                         form.up('panel').getLayout().setActiveItem(0);
                     },
-                },'->',
+                }, '->',
                 {
                     text: 'Speichern',
                     handler: function (me) {
@@ -139,12 +146,12 @@ Ext.define('Tualo.groupeditor.lazy.Viewport',{
 
 
                         if (Ext.isEmpty(vals.groups)) vals.groups = [];
-                        selection.set('text',vals.text);
-                        selection.set('title',vals.text);
+                        selection.set('text', vals.text);
+                        selection.set('title', vals.text);
                         // selection.set('iconCls',vals.iconCls);
-                        selection.set('iconcls',vals.iconcls);
-                        selection.set('route_to',vals.route_to);
-                        selection.set('groups',vals.groups);
+                        selection.set('iconcls', vals.iconcls);
+                        selection.set('route_to', vals.route_to);
+                        selection.set('groups', vals.groups);
                         selection.commit();
 
                         form.up('panel').getLayout().setActiveItem(0);
@@ -168,4 +175,4 @@ Ext.define('Tualo.groupeditor.lazy.Viewport',{
             ]
         }
     ]
-} );
+});
